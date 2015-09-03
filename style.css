@@ -1,0 +1,23 @@
+html {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	height: 100%;
+}
+
+.wrapper {
+	height: 100%;
+	width: 100%;
+}
+
+.child {
+	background: red;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.child:hover {
+	background: blue;
+}
