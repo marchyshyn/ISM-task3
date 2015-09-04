@@ -19,48 +19,117 @@ function myFunction() {
     click: function() {
       var ind = $('.wrapper .child');
       var n = ind.index(this) + 1;
-      var items = wrapper / squareSize |0;
-
-      var x = items;
-      var y = items;
-
-      for (var i = 0; i <= (a / 2); i++) {
+      var prevIndex = $('.wrapper .child:nth-child('+ n +')').position();
+      var co = prevIndex.left / squareSize;
+      console.log(co);
+      var co2 = items - co - 1;
+      var line = wrapper / squareSize |0;
+      var lineA = wrapper / squareSize |0;
+      var topY = n - line;
+      var bottomY = n + line;
+      var y = 1;
+      var x = 1;
+      var z = 1;
+      arr = [];
+      for (var i = 1; i < a; i++) {
         (function () {
           setTimeout(function() {
-        var select = $('.wrapper .child:nth-child('+ n +')');
-        var next = $('.wrapper .child:nth-child('+ (n+b) +')');
-        var prev = $('.wrapper .child:nth-child('+ (n-b) +')');
-        var top = $('.wrapper .child:nth-child('+ (n - x) +')');
-        var top2 = $('.wrapper .child:nth-child('+ (n - x + 1) +')');
-        var top3 = $('.wrapper .child:nth-child('+ (n - x - 1) +')');
-        var bottom = $('.wrapper .child:nth-child('+ (n + y) +')');
-        var bottom2 = $('.wrapper .child:nth-child('+ (n + y + 1) +')');
-        var bottom3 = $('.wrapper .child:nth-child('+ (n + y - 1) +')');
-        b++;
-        x++;
+        topY = n - (line * y);
+        bottomY = n + (line * y);
+        //var prevX = n - x;
         y++;
-        var arr = [];
-        arr.push(top, bottom, prev, next, select, top2, top3, bottom2, bottom3);
+        //x++;
+        var select = $('.wrapper .child:nth-child('+ n +')');
+        var top = $('.wrapper .child:nth-child('+ topY +')');
+        var bottom = $('.wrapper .child:nth-child('+ bottomY +')');
+        
+        arr.push(select, top, bottom);
+        // jQuery.each(arr, function() {
+        //   $(this).css({background: 'red'});
+        // })
+        }, i * 500);
+          })(i);
+      };
+
+      for (var i = 0; i < co; i++) {
+        (function () {
+          setTimeout(function() {
+            var prevX = n - x;
+            var prev = $('.wrapper .child:nth-child('+ prevX +')');
+            x++;
+            arr.push(prev);
+            
+        }, i * 600);
+          })(i);
+      };
+
+      for (var i = 0; i < co2; i++) {
+        (function () {
+          setTimeout(function() {
+            var nextX = n + z;
+            var next = $('.wrapper .child:nth-child('+ nextX +')');
+            z++;
+            arr.push(next);
+            
+        }, i * 501);
+          })(i);
+      };
+
+      for (var i = 1; i < a; i++) {
+        (function () {
+          setTimeout(function() {
         jQuery.each(arr, function() {
           $(this).css({background: 'red'});
         })
-      }, i * 100);
-        })(i);
+        }, i * 500);
+          })(i);
       };
+
+
     }
   })
 }
 }
 
+// var position = $(this).position();
+//             var  squarePosY = (position.top / squareSize) + 1;
+//             console.log(squarePosY);
+//             var  squarePosX = (position.left / squareSize) + 1;
+//             console.log(squarePosX);
+
+ // var top = n - items;
+ //        var topX = $('.wrapper .child:nth-child('+ top +')');
+ //        top = top * itemsPlus;
+ //        var bottom = n + items;
+ //        var bottomX = $('.wrapper .child:nth-child('+ bottom +')');
+ //        itemsPlus++;
 
 
 
 
-
-
-
-
-
+// for (var i = 0; i <= a; i++) {
+//         (function () {
+//           setTimeout(function() {
+//         var select = $('.wrapper .child:nth-child('+ n +')');
+//         var next = $('.wrapper .child:nth-child('+ (n+b) +')');
+//         var prev = $('.wrapper .child:nth-child('+ (n-b) +')');
+//         var top = $('.wrapper .child:nth-child('+ (n - x) +')');
+//         var top2 = $('.wrapper .child:nth-child('+ (n - x + 1) +')');
+//         var top3 = $('.wrapper .child:nth-child('+ (n - x - 1) +')');
+//         var bottom = $('.wrapper .child:nth-child('+ (n + y) +')');
+//         var bottom2 = $('.wrapper .child:nth-child('+ (n + y + 1) +')');
+//         var bottom3 = $('.wrapper .child:nth-child('+ (n + y - 1) +')');
+//         b++;
+//         x++;
+//         y++;
+//         var arr = [];
+//         arr.push(top, bottom, prev, next, select, top2, top3, bottom2, bottom3);
+//         jQuery.each(arr, function() {
+//           $(this).css({background: 'red'});
+//         })
+//       }, i * 100);
+//         })(i);
+//       };
 
 // var select = $('.wrapper .child:nth-child('+ n +')');
 //             var next = $('.wrapper .child:nth-child('+ (n+1) +')');
