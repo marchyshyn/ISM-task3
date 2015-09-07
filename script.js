@@ -6,6 +6,7 @@ function myFunction() {
    var wrapperHeight = $('.wrapper').height();
    var elements = (wrapperWidth / squareSize |0) * (wrapperHeight / squareSize |0);
    var lineItems = wrapperWidth / squareSize |0;
+   var columnItems = wrapperHeight / squareSize |0;
    for (var i = 0; i < elements; i++) {
     $('.wrapper').append('<div class="child"><div>');
     $('.child').css({
@@ -19,8 +20,10 @@ function myFunction() {
       var n = indexCount.index(this) + 1;
       var indexPos = $('.wrapper .child:nth-child('+ n +')').position();
       var positionX = indexPos.left / squareSize;
-      var positionY = (indexPos.top / squareSize) + 1;
       var positionX2 = lineItems - positionX - 1;
+      var positionY = (indexPos.top / squareSize) + 1;
+      var positionY2 = columnItems - (indexPos.top / squareSize);
+      console.log(positionY2);
       var topY = n - lineItems;
       var bottomY = n + lineItems;
       var topCount = 0;
@@ -103,7 +106,7 @@ function myFunction() {
 })(i);
 };
       //------------------------bottom ------------------//
-      for (var i = 0; i < elements; i++) {
+      for (var i = 0; i < positionY2; i++) {
         (function () {
           setTimeout(function() {
             bottomY = n + (lineItems * bottomCount);
