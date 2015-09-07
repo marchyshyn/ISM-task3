@@ -2,200 +2,147 @@ function myFunction() {
   var square = prompt("Please enter square size in px");
   var squareSize = parseInt(square);
   if (square != null) {
-   var wrapper = $('.wrapper').width();
+   var wrapperWidth = $('.wrapper').width();
    var wrapperHeight = $('.wrapper').height();
-   var a = (wrapper / squareSize |0) * (wrapperHeight / squareSize |0);
-   var items = wrapper / squareSize |0;
-   var b = 1;
-   for (var i = 0; i < a; i++) {
-    $('.wrapper').append('<div class="child">' + i +'<div>');
+   var elements = (wrapperWidth / squareSize |0) * (wrapperHeight / squareSize |0);
+   var lineItems = wrapperWidth / squareSize |0;
+   for (var i = 0; i < elements; i++) {
+    $('.wrapper').append('<div class="child"><div>');
     $('.child').css({
      width: squareSize,
      height: squareSize
    });
   };
-  var count = $('.child').length;
   $('.child').on({
     click: function() {
-      var ind = $('.wrapper .child');
-      var n = ind.index(this) + 1;
-      var prevIndex = $('.wrapper .child:nth-child('+ n +')').position();
-      var co = prevIndex.left / squareSize;
-      console.log(co);
-      var co2 = items - co - 1;
-      var line = wrapper / squareSize |0;
-      var lineA = wrapper / squareSize |0;
-      var topY = n - line;
-      var bottomY = n + line;
-      var y = 1;
-      var x = 1;
-      var z = 1;
+      var indexCount = $('.wrapper .child');
+      var n = indexCount.index(this) + 1;
+      var indexPos = $('.wrapper .child:nth-child('+ n +')').position();
+      var positionX = indexPos.left / squareSize;
+      var positionY = (indexPos.top / squareSize) + 1;
+      var positionX2 = lineItems - positionX - 1;
+      var topY = n - lineItems;
+      var bottomY = n + lineItems;
+      var topCount = 0;
+      var lrTop = 0;
+      var lrBottom = 0;
+      var bottomCount = 0;
       arr = [];
-      for (var i = 1; i < a; i++) {
+      var select = $('.wrapper .child:nth-child('+ n +')');
+      arr.push(select);
+      var indexEl = select.position();
+      //------------------------left right top level------------------//
+      for (var i = 0; i <= positionX; i++) {
         (function () {
           setTimeout(function() {
-        topY = n - (line * y);
-        bottomY = n + (line * y);
-        //var prevX = n - x;
-        y++;
-        //x++;
-        var select = $('.wrapper .child:nth-child('+ n +')');
-        var top = $('.wrapper .child:nth-child('+ topY +')');
-        var bottom = $('.wrapper .child:nth-child('+ bottomY +')');
-        
-        arr.push(select, top, bottom);
-        // jQuery.each(arr, function() {
-        //   $(this).css({background: 'red'});
-        // })
-        }, i * 500);
-          })(i);
-      };
-
-      for (var i = 0; i < co; i++) {
-        (function () {
-          setTimeout(function() {
-            var prevX = n - x;
+            var prevX = n - lrTop;
             var prev = $('.wrapper .child:nth-child('+ prevX +')');
-            x++;
+            for (var q = 0; q < lrTop; q++) {
+              //---left top--//
+              var prevX2 = n - (lineItems * q)  - lrTop;
+              var prev2 = $('.wrapper .child:nth-child('+ prevX2 +')');
+              //---left bottom--//
+              var nextX2 = n + (lineItems * q)  - lrTop;
+              var next2 = $('.wrapper .child:nth-child('+ nextX2 +')');
+              arr.push(prev2, next2);
+            };
+            lrTop++;
             arr.push(prev);
-            
-        }, i * 600);
-          })(i);
+          }, i * 500);
+        })(i);
       };
-
-      for (var i = 0; i < co2; i++) {
+      //------------------------left right bottom level------------------//
+      for (var i = 0; i <= positionX2; i++) {
         (function () {
           setTimeout(function() {
-            var nextX = n + z;
+            var nextX = n + lrBottom;
             var next = $('.wrapper .child:nth-child('+ nextX +')');
-            z++;
+            for (var q = 0; q < lrBottom; q++) {
+              //---right top--//
+              var prevX3 = n - (lineItems * q)  + lrBottom;
+              var prev3 = $('.wrapper .child:nth-child('+ prevX3 +')');
+              //---right bottom--//
+              var nextX3 = n + (lineItems * q)  + lrBottom;
+              var next3 = $('.wrapper .child:nth-child('+ nextX3 +')');
+              arr.push(prev3, next3);
+            };
+            lrBottom++;
             arr.push(next);
-            
-        }, i * 501);
-          })(i);
+          }, i * 500);
+        })(i);
       };
-
-      for (var i = 1; i < a; i++) {
+      //------------------------top ++ ------------------//
+      for (var i = 0; i <= positionY; i++) {
         (function () {
           setTimeout(function() {
-        jQuery.each(arr, function() {
-          $(this).css({background: 'red'});
-        })
-        }, i * 500);
+            topY = n - (lineItems * topCount);
+            var top = $('.wrapper .child:nth-child('+ topY +')');
+            arr.push(top);
+            for (var k = 1; k <= topCount; k++) {
+              var topRightY2 = n - (lineItems * topCount) + k;
+              var topRight2 = $('.wrapper .child:nth-child('+ topRightY2 +')');
+              var topLine = topRight2.position();
+              var trLimit = topLine.left / squareSize;
+              var trLimit2 = (indexEl.left / squareSize) + 1;
+              if (trLimit >= trLimit2 && trLimit <= lineItems) {
+                arr.push(topRight2);
+              }
+            };
+            for (var kk = 1; kk <= topCount; kk++) {
+              var topLeftY2 = n - (lineItems * topCount) - kk;
+              var topLeft2 = $('.wrapper .child:nth-child('+ topLeftY2 +')');
+              var topLine2 = topLeft2.position();
+              var tlLimit = topLine2.left / squareSize;
+              var tlLimit2 = (indexEl.left / squareSize) + 1;
+              if (tlLimit <= tlLimit2 ) {
+                arr.push(topLeft2);
+              }
+            };
+            topCount++;
+          }, i * 500);
+})(i);
+};
+      //------------------------bottom ------------------//
+      for (var i = 0; i < elements; i++) {
+        (function () {
+          setTimeout(function() {
+            bottomY = n + (lineItems * bottomCount);
+            var bottom = $('.wrapper .child:nth-child('+ bottomY +')');
+            arr.push(bottom);
+            for (var kk = 1; kk <= bottomCount; kk++) {
+              var bottomLeftY2 = n + (lineItems * bottomCount) - kk;
+              var bottomLeft2 = $('.wrapper .child:nth-child('+ bottomLeftY2 +')');
+              var bottomLine = bottomLeft2.position();
+              var blLimit = bottomLine.left / squareSize;
+              var blLimit2 = (indexEl.left / squareSize) + 1;
+              if (blLimit <= blLimit2 ) {
+                arr.push(bottomLeft2);
+              }
+            };
+            for (var k = 1; k <= bottomCount; k++) {
+              var bottomRightY2 = n + (lineItems * bottomCount) + k;
+              var bottomRight2 = $('.wrapper .child:nth-child('+ bottomRightY2 +')');
+              var bottomLine2 = bottomRight2.position();
+              var brLimit = bottomLine2.left / squareSize;
+              var brLimit2 = (indexEl.left / squareSize) + 1;
+              if (brLimit >= brLimit2 && brLimit <= lineItems) {
+                arr.push(bottomRight2);
+              }
+            };
+            bottomCount++;
+          }, i * 500);
           })(i);
-      };
-
-
+          };
+          for (var i = 1; i < elements; i++) {
+            (function () {
+              setTimeout(function() {
+                jQuery.each(arr, function() {
+                  $(this).addClass('click')
+                })
+              }, i * 500);
+            })(i);
+          };
+        }
+      })
     }
-  })
 }
-}
-
-// var position = $(this).position();
-//             var  squarePosY = (position.top / squareSize) + 1;
-//             console.log(squarePosY);
-//             var  squarePosX = (position.left / squareSize) + 1;
-//             console.log(squarePosX);
-
- // var top = n - items;
- //        var topX = $('.wrapper .child:nth-child('+ top +')');
- //        top = top * itemsPlus;
- //        var bottom = n + items;
- //        var bottomX = $('.wrapper .child:nth-child('+ bottom +')');
- //        itemsPlus++;
-
-
-
-
-// for (var i = 0; i <= a; i++) {
-//         (function () {
-//           setTimeout(function() {
-//         var select = $('.wrapper .child:nth-child('+ n +')');
-//         var next = $('.wrapper .child:nth-child('+ (n+b) +')');
-//         var prev = $('.wrapper .child:nth-child('+ (n-b) +')');
-//         var top = $('.wrapper .child:nth-child('+ (n - x) +')');
-//         var top2 = $('.wrapper .child:nth-child('+ (n - x + 1) +')');
-//         var top3 = $('.wrapper .child:nth-child('+ (n - x - 1) +')');
-//         var bottom = $('.wrapper .child:nth-child('+ (n + y) +')');
-//         var bottom2 = $('.wrapper .child:nth-child('+ (n + y + 1) +')');
-//         var bottom3 = $('.wrapper .child:nth-child('+ (n + y - 1) +')');
-//         b++;
-//         x++;
-//         y++;
-//         var arr = [];
-//         arr.push(top, bottom, prev, next, select, top2, top3, bottom2, bottom3);
-//         jQuery.each(arr, function() {
-//           $(this).css({background: 'red'});
-//         })
-//       }, i * 100);
-//         })(i);
-//       };
-
-// var select = $('.wrapper .child:nth-child('+ n +')');
-//             var next = $('.wrapper .child:nth-child('+ (n+1) +')');
-//             var prev = $('.wrapper .child:nth-child('+ (n-1) +')');
-//             var bottom = $('.wrapper .child:nth-child('+ (n - items) +')');
-//             var top = $('.wrapper .child:nth-child('+ (n + items) +')');
-//             select.css({background: 'red'});
-//             next.css({background: 'blue'});
-//             prev.css({background: 'green'});
-//             bottom.css({background: 'gold'});
-//             top.css({background: 'tomato'});
-
-// var position = $(this).position();
-//             var  squarePosY = (position.top / squareSize) + 1;
-//             console.log(squarePosY);
-//             var  squarePosX = (position.left / squareSize) + 1;
-//             console.log(squarePosX);
-
-// var sq = squareSize - 1;
-//             var elem1 = document.elementFromPoint(((squarePosX - 1) * sq), ((squarePosY - 1) * sq));
-//             var elem2 = document.elementFromPoint((squarePosX * sq), ((squarePosY - 1) * sq));
-//             var elem5 = document.elementFromPoint((squarePosX * sq), (squarePosY * sq));
-//             $(elem1).css({background: 'green'});
-//             $(elem2).css({background: 'green'});
-//             $(elem5).css({background: 'green'});
-
-// click: function() {
-//             var position = $(this).position();
-//             var  squarePosY = (position.top / square) + 1;
-//             console.log(squarePosY);
-//             var  squarePosX = (position.left / square) + 1;
-//             console.log(squarePosX);
-//             var elem = '90px';
-//             var el = $('.child').position();
-//             console.log(el.top);
-//             //if ($('.child').position())
-
-//         }
-
-// mousedown: function() {
-//                 var ind = $('.wrapper .child');
-//             var n = ind.index(this) + 1;
-//                 for (var i = 0; i <= a; i++) {
-//                     (function () {
-//                         setTimeout(function() {
-//                             var select = $('.wrapper .child:nth-child('+ n +')');
-//                             console.log(n);
-//                             var prev = select.prev();
-//                             prev.css({background: 'gold'});
-//                             n--;
-//                         }, i * 100);
-//                     })(i);
-//                 };
-//             },
-            // click: function() {
-            // var ind = $('.wrapper .child');
-            // var n = ind.index(this) + 1;
-            //     for (var i = 0; i <= a; i++) {
-            //         (function () {
-            //             setTimeout(function() {
-            //                 var select = $('.wrapper .child:nth-child('+ n +')');
-            //                 console.log(n);
-            //                 var prev = select.next();
-            //                 prev.css({background: 'gold'});
-            //                 n++;
-            //             }, i * 100);
-            //         })(i);
-            //     };
-            // }

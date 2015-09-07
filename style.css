@@ -16,8 +16,14 @@ body {
 	background: grey;
 	display: inline-block;
 	vertical-align: top;
+	position: relative;
 }
 
 .child:hover {
-	background: blue;
+	background: red;
+}
+
+.click {
+	background: red;
+	transition: background .2s;
 }
