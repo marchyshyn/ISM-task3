@@ -23,7 +23,6 @@ function myFunction() {
       var positionX2 = lineItems - positionX - 1;
       var positionY = (indexPos.top / squareSize) + 1;
       var positionY2 = columnItems - (indexPos.top / squareSize);
-      console.log(positionY2);
       var topY = n - lineItems;
       var bottomY = n + lineItems;
       var topCount = 0;
