@@ -195,3 +195,9 @@ function setRadius () {
   }
   
 }
+
+function setSize () {
+  $('.child').remove();
+  $('.rad').text('Set Radius');
+  myFunction();
+}
