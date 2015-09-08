@@ -6,15 +6,21 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<div class="wrapper">
-		
+	<div class="config">
+		<div class="wr">
+			<button class="reset">Restart</button>
+			<button onclick="randomColor();">Set Color</button>
+			<button onclick="setRadius();" class="rad">Set Radius</button>
+			<div class="random-coor"></div>
+		</div>
 	</div>
+	<div class="wrapper"></div>
 	<script src="jquery-2.1.4.min.js"></script>
 	<script src="script.js"></script>
 	<script>
 		$(window).ready(function () {
-		myFunction();
-	})
+			myFunction();
+		})
 	</script>
 </body>
 </html>

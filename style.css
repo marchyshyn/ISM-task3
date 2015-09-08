@@ -14,16 +14,38 @@ body {
 
 .child {
 	background: grey;
-	display: inline-block;
 	vertical-align: top;
 	position: relative;
+	float: left;
 }
 
-.child:hover {
-	background: red;
+.config {
+	width: 150px;
+	height: 220px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: rgba(0, 170, 238, 0.8);
+	z-index: 1;
 }
 
-.click {
-	background: red;
-	transition: background .2s;
+.random-coor {
+	width: 90px;
+	height: 40px;
+	margin: 0 auto;
+}
+
+button {
+	display: block;
+	background: #06B30D;
+	border: none;
+	color: #fff;
+	margin: 10px auto;
+	padding: 10px;
+	min-width: 90px;
+	height: 40px;
+}
+
+.radius {
+	border-radius: 50%;
 }
